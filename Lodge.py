@@ -1,5 +1,5 @@
 import csv
-install scipy
+import matplotlib.pyplot as plt
 from scipy import stats
 
 # Initialize lists to store the second elements and elements 30 rows down
