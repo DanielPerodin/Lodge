@@ -40,6 +40,10 @@ for row_index in range(len(rows)):
 differences = [second_elements[i + 1] - second_elements[i] for i in range(len(second_elements) - 1)]
 deltaPrice = [abs(elements_30_rows_down_with_5_rows_down[i] - elements_30_rows_down[i]) for i in range(len(elements_30_rows_down) - 1)]
 
-slope, intercept, r, p, std_err = stats.linregress(differences, deltaPrice)
+deltaVol = [differences[i] for i in range(len(deltaPrice))]
+
+slope, intercept, r, p, std_err = stats.linregress(deltaVol, deltaPrice)
 
 print(r)
+plt.scatter(deltaVol, deltaPrice)
+plt.show()
