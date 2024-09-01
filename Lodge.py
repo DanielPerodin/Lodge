@@ -1,11 +1,14 @@
 import csv
+import numpy
 import matplotlib.pyplot as plt
 from scipy import stats
+from sklearn.metrics import r2_score
 
 # Initialize lists to store the second elements and elements 30 rows down
 second_elements = []
 elements_30_rows_down = []
 elements_30_rows_down_with_5_rows_down = []
+zero_lag_price = []
 
 # Open the CSV file and read all rows into a list
 with open('S&P and VIX.csv', mode='r') as file:
@@ -22,7 +25,7 @@ for row_index, row in enumerate(rows):
         # Append the second element of the current row to the list
         if len(row) > 1:
             second_elements.append(float(row[1]))  # Convert to float if needed
-
+            zero_lag_price.append(float(row[2]))
 # Loop through the rows to get elements 30 rows down and also 5 rows down from these rows
 for row_index in range(len(rows)):
     if row_index >= 34 and row_index % 30 == 4:  # Ensure we're processing the correct rows
@@ -42,8 +45,14 @@ deltaPrice = [abs(elements_30_rows_down_with_5_rows_down[i] - elements_30_rows_d
 
 deltaVol = [differences[i] for i in range(len(deltaPrice))]
 
-slope, intercept, r, p, std_err = stats.linregress(deltaVol, deltaPrice)
 
-print(r)
-plt.scatter(deltaVol, deltaPrice)
-plt.show()
+slope, intercept, r, p, std_err = stats.linregress(second_elements, zero_lag_price)
+#slope, intercept, r, p, std_err = stats.linregress(deltaVol, deltaPrice)
+
+#print(r)
+#plt.scatter(deltaVol, deltaPrice)
+plt.scatter(second_elements, zero_lag_price)
+#plt.show()
+
+mymodel = numpy.poly1d(numpy.polyfit(second_elements, zero_lag_price, 3))
+print(r2_score(zero_lag_price, mymodel(second_elements)))
