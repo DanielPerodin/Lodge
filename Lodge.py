@@ -37,8 +37,9 @@ class Lodge:
                 if target_index < len(rows) and len(rows[target_index]) > 2:
                     elements_lag_rows_down_with_plus_1_rows_down.append(float(rows[target_index][2]))  # Add the third element of the row 1 row down
 
-
-
+        # Compute the differences between neighboring elements
+        deltaPercentVol = [(second_elements[i + 1] / second_elements[i] for i in range(len(second_elements) - 1)) - 1]
+        deltaPercentPrice = [(elements_lag_rows_down_with_plus_1_rows_down[i] / elements_lag_rows_down[i] for i in range(len(second_elements) - 1)) - 1]
 
 
 
