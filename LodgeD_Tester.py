@@ -1,11 +1,11 @@
-# This is the client class for Russel
-from LodgeR import *
+# This is the client class for Dow
+from LodgeD import *
 
 r_values = []
 
 # Iterate through for-loop (lag from 1 day to 30 days) to save r-values for different lag times to a 2D array (stores r and lag) by calling run function in the Lodge class.
 for i in range(0, 51):
-    Z = LodgeR(i)
+    Z = LodgeD(i)
     r_values.append(i)
     r_values.append(Z.run())
     
@@ -15,7 +15,7 @@ print(r_values)
 sorted_list = sorted(r_values, reverse=True)
 
 # Print the ordered array to a .txt file
-file_name = 'Russel Versus RVX R values and lag times.txt'
+file_name = 'Dow Versus VDX R values and lag times.txt'
 
 # Open the file in write mode
 with open(file_name, 'w') as file:
@@ -24,5 +24,5 @@ with open(file_name, 'w') as file:
         file.write(f"{item}\n")  # Write each item followed by a newline
 
 #show the scatter plot with the fit line for the greatest correlation
-G = LodgeR(0)
+G = LodgeD(0)
 G.show()
