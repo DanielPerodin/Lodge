@@ -23,14 +23,16 @@ class Lodge:
 
         #Loop through the rows to get second elements from every fifth row
         for row_index, row in enumerate(rows):
-            if len(row) > 1:
+            if row_index >= 1:
+             if len(row) > 1:
                 second_elements.append(float(row[1]))  # Convert to float if needed
 
         # Loop through the rows to get elements lag rows down and also 1 row down from these rows
         for row_index in range(len(rows)):
             lagged_index = row_index + self.lag_time 
          # Check if the row lag rows down has at least 3 elements
-            if len(rows[lagged_index]) > 2:
+            if row_index > 0:
+             if len(rows[lagged_index]) > 2:
                 elements_lag_rows_down.append(float(rows[lagged_index][2]))  # Add the third element of the current row
                 # Check if the row 1 row down from the current row has at least 3 elements
                 target_index = lagged_index + 1
@@ -38,12 +40,12 @@ class Lodge:
                     elements_lag_rows_down_with_plus_1_rows_down.append(float(rows[target_index][2]))  # Add the third element of the row 1 row down
 
         # Compute the differences between neighboring elements
-        deltaPercentVol = [(second_elements[i + 1] / second_elements[i] for i in range(len(second_elements) - 1)) - 1]
-        deltaPercentPrice = [(elements_lag_rows_down_with_plus_1_rows_down[i] / elements_lag_rows_down[i] for i in range(len(second_elements) - 1)) - 1]
+        deltaPercentVol = [((second_elements[i + 1] / second_elements[i]) - 1) for i in range(len(second_elements) - 1)]
+        deltaPercentPrice = [((elements_lag_rows_down_with_plus_1_rows_down[i] / elements_lag_rows_down[i]) - 1) for i in range(len(second_elements) - 1)]
+       
+        slope, intercept, r, p, std_err = stats.linregress(deltaPercentVol, deltaPercentPrice)
 
-
-
-
+        return(r)
 
 
 
