@@ -1,4 +1,12 @@
-~$Correlation Calculations_Example.xlsx
-Regression Tracker.xlsx
-~$Regression Tracker.xlsx
-No Lag, percent change in S&P price versus percent change in VIX.png
+*.xlsx
+*.png
+*.csv
+Data/
+__pycache__/
+.DS_Store
+.mypy_cache/
+bin/
+include/
+lib/
+share/
+pyvenv.cfg

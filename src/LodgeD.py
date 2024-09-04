@@ -1,8 +1,6 @@
 import csv
-import numpy
 import matplotlib.pyplot as plt
 from scipy import stats
-from sklearn.metrics import r2_score
 
 class LodgeD:
     def __init__(self, lag_time) -> None:
